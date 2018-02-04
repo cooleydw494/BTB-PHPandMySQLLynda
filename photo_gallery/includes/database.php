@@ -11,9 +11,9 @@ class MySQLDatabase {
   }
 
   public function open_connection() {
-    $connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-    if (mysqli_connection_errno()) {
-      die('Database Connection Failed: ' . mysqli_connection_err() . ' (' . mysqli_connection_errno() . ')');
+    $this->connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+    if (mysqli_connect_errno()) {
+      die('Database Connection Failed: ' . mysqli_connect_err() . ' (' . mysqli_connect_errno() . ')');
     }
   }
 
@@ -30,7 +30,7 @@ class MySQLDatabase {
     return $result;
   }
 
-  public function mysql_prep($string) {
+  public function escape_value($string) {
     $escaped_string = mysqli_real_escape_string($this->connection, $string);
     return $escaped_string;
   }
@@ -39,6 +39,23 @@ class MySQLDatabase {
     if (!$result) {
       die('Database Query Failed :(');
     }
+  }
+
+  public function fetch_array($result_set) {
+    return mysqli_fetch_array($result_set);
+  }
+
+  public function num_rows($result_set) {
+    return mysqli_num_rows($result_set);
+  }
+
+  public function insert_id() {
+    //get the last inserted ID over the current DB connection
+    return mysqli_insert_id($this->connection);
+  }
+
+  public function affected_rows() {
+    return mysqli_affected_rows($this->connection);
   }
 
 }
