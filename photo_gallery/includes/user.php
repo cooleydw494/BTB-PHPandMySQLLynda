@@ -1,6 +1,6 @@
 <?php
 //we're going to need the database
-require_once 'database.php';
+require_once LIB_PATH.DS.'database.php';
 
 class User {
 

@@ -1,8 +1,5 @@
 <?php
-require_once '../../includes/functions.php';
-require_once '../../includes/session.php';
-require_once '../../includes/database.php';
-require_once '../../includes/user.php';
+require_once '../../includes/initialize.php';
 
 if ($session->is_logged_in()) {
   redirect_to('index.php');
@@ -28,17 +25,8 @@ if (isset($_POST['submit'])) { //form has been submitted
 }
 ?>
 
+<?php include_layout_template('admin_header.php'); ?>
 
-<html>
-  <head>
-    <title>Photo Gallery</title>
-    <link href="../stylesheets/main.css" media="all" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <div id="header">
-      <h1>Photo Gallery</h1>
-    </div>
-    <div id="main">
       <h2>Staff Login</h2>
       <?php echo output_message($message); ?>
 
@@ -61,11 +49,5 @@ if (isset($_POST['submit'])) { //form has been submitted
           </tr>
         </table>
       </form>
-    </div>
-    <div id="footer">
-      Copyright <?php echo strftime('%Y', time()); ?>, David Cooley
-    </div>
-  </body>
-</html>
 
-<?php if (isset($database)) { $database->close_connection(); } ?>
+<?php include_layout_template('admin_footer.php'); ?>
