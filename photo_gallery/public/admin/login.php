@@ -14,6 +14,7 @@ if (isset($_POST['submit'])) { //form has been submitted
 
   if ($found_user) {
     $session->login($found_user);
+    log_action('Login', "{$username} logged in.");
     redirect_to('index.php');
   } else {
     $message = 'Username / Password combination incorrect';

@@ -1,5 +1,16 @@
 <?php
 
+function log_action($action, $message = "") {
+  $file = SITE_ROOT.DS.'logs'.DS.'log.txt';
+  if ($handle = fopen($file, 'a')) {
+    $logmessage = strftime('%Y-%m-%d %H:%M:%S', time()) . " | {$action}: $message" . PHP_EOL;
+    fwrite($handle, $logmessage);
+    fclose($handle);
+  } else {
+    echo 'failed to write to log';
+  }
+}
+
 function strip_zeros_from_date($marked_string="") {
   //remove the marked zeros
   $no_zeros = str_replace('*0', '', $marked_string);
