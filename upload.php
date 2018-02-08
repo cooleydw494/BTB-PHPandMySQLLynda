@@ -17,12 +17,24 @@ $upload_errors = [
 $error = $_FILES['file_upload']['error'] ?? NULL;
 $message = $upload_errors[$error] ?? NULL;
 
-echo '<pre>';
-if (isset($_FILES['file_upload'])) {
-  print_r($_FILES['file_upload']);
+if (isset($_POST['submit'])) {
+  $tmp_file = $_FILES['file_upload']['tmp_name'];
+  $target_file = basename($_FILES['file_upload']['name']);
+  $upload_dir = "uploads";
+
+  // You will probably want to first use file_exists() to make sure
+  // there isn't already a file by the same name
+
+  // move_uploaded_file will return false if $tmp_file is not a valid upload file
+  // or if it cannot be moved for any other reason :o
+  if (move_uploaded_file($tmp_file, $upload_dir."\\".$target_file)) {
+    $message = "File uploaded successfully";
+  } else {
+    $error = $_FILES['file_upload']['error'];
+    $message = $upload_errors[$error];
+  }
 }
-echo '</pre>';
-echo '<hr />';
+
 ?>
 <html lang="en">
   <head>
