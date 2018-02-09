@@ -62,6 +62,7 @@ class  DatabaseObject {
         $attributes[$field] = $this->$field;
       }
     }
+    return $attributes;
   }
 
   protected function sanitized_attributes() {
