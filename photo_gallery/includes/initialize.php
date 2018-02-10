@@ -9,6 +9,7 @@ defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
 
 defined('SITE_ROOT') ? null : define('SITE_ROOT', 'C:'.DS.'apache'.DS.'htdocs'.DS.'phpBTBsandbox'.DS.'photo_gallery');
 defined('LIB_PATH') ? null : define('LIB_PATH', SITE_ROOT.DS.'includes');
+defined('PUBLIC_PATH') ? null : define('PUBLIC_PATH', SITE_ROOT.DS.'public');
 
 // load the config file first
 require_once LIB_PATH.DS.'config.php';

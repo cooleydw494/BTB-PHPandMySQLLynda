@@ -89,5 +89,36 @@ class Photograph extends DatabaseObject {
     }
   }
 
+  public function destroy() {
+    // First remove the database entry
+    if ($this->delete()) {
+      // then remove the file
+      $target_path = PUBLIC_PATH.DS.$this->image_path();
+      return unlink($target_path) ? true : false;
+    } else {
+      //database delete failed
+      return false;
+    }
+  }
+
+  public function image_path() {
+    return $this->upload_dir.DS.$this->filename;
+  }
+
+  public function size_as_text() {
+    if ($this->size < 1024) {
+      return "{$this->size} bytes";
+    } else if ($this->size < 1048576) {
+      $size_kb = round($this->size/1024, 1);
+      return "{$size_kb} KB";
+    } else {
+      $size_mb = round($this->size/1048576, 1);
+      return "{$size_mb} MB";
+    }
+  }
+
+  public function comments() {
+    return Comment::find_comments_on($this->id);
+  }
 
 }

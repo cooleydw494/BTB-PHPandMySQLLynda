@@ -36,7 +36,7 @@ function output_message($message = '') {
 
 function __autoload($class_name) {
   $class_name = strtolower($class_name);
-  $path = LIB_PATH.DS.'{$class_name}.php';
+  $path = LIB_PATH.DS."{$class_name}.php";
   if (file_exists($path)) {
     require_once($path);
   } else {
@@ -46,4 +46,9 @@ function __autoload($class_name) {
 
 function include_layout_template($template = '') {
   include SITE_ROOT.DS.'public'.DS.'layouts'.DS.$template;
+}
+
+function datetime_to_text($datetime = "") {
+  $unixdatetime = strtotime($datetime);
+  return strftime('%B %d %Y at %I:%M %p', $unixdatetime);
 }

@@ -9,9 +9,9 @@ class  DatabaseObject {
     return $result_set;
   }
 
-  public static function find_by_id($id=0) {
+  public static function find_by_id($id = 0) {
     global $database;
-    $result_array = static::find_by_sql("SELECT * FROM " . static::$table_name .  " WHERE id = {$id}");
+    $result_array = static::find_by_sql("SELECT * FROM " . static::$table_name .  " WHERE id = " . $database->escape_value($id) . " LIMIT 1");
     return !empty($result_array) ? array_shift($result_array) : false;
   }
 
@@ -71,7 +71,9 @@ class  DatabaseObject {
     // sanitize the values before submitting
     // Note: does not alter the actual value of each attribute
     foreach ($this->attributes() as $key => $value) {
-      $clean_attributes[$key] = $database->escape_value($value);
+      if (!empty($value)) {
+        $clean_attributes[$key] = $database->escape_value($value);
+      }
     }
     return $clean_attributes;
   }
@@ -94,7 +96,6 @@ class  DatabaseObject {
     $sql .= ") VALUES ('";
     $sql .= join("', '", array_values($attributes));
     $sql .= "')";
-    var_dump($sql);
     if ($database->query($sql)) {
       $this->id = $database->insert_id();
       return true;
